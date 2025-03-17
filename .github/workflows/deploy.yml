@@ -21,3 +21,36 @@ jobs:
         run: docker build -t coder80/usmile:latest .
       - name: Push to Docker Hub
         run: docker push coder80/usmile:latest
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/key
+          sudo chmod 600 ~/.ssh/key
+          ssh-keyscan -H $SSH_HOST > ~/.ssh/known_hosts
+        env:
+          SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
+          SSH_HOST: ${{secrets.SSH_HOST}}
+
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - name: Upload compose file
+        run: |
+          rsync -e "ssh -i ~/.ssh/key" compose.yml root@$SSH_HOST:/root/projects/usmile/compose.yml
+        env:
+          SSH_HOST: ${{secrets.SSH_HOST}}
+
+      - name: Connnect and deploy
+        run: |
+          ssh -i ~/.ssh/key root@$SSH_HOST "
+          cd /root/projects/usmile && 
+          docker compose --profile prod pull
+          docker compose --profile prod up -d &&
+          docker system prune -f"
+        env:
+          SSH_HOST: ${{secrets.SSH_HOST}}
