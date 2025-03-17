@@ -1,7 +1,7 @@
 import asyncio
 
-from entities.bot import bot
-from entities.dispatcher import dp
+from entities import bot
+from entities import dp
 
 
 async def main():

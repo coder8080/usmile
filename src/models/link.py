@@ -12,6 +12,9 @@ class Link(BaseModel):
     count = IntegerField(null=False)
     used = BooleanField(default=False)
 
+    def render(self):
+        return f"https://t.me/usmile_cert_bot?start={self.code}"
+
 
 def init_link():
     db.create_tables([Link])

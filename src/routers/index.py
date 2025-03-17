@@ -1,17 +1,18 @@
 from aiogram import Router
-from aiogram.filters import CommandStart
+from aiogram.filters import CommandStart, StateFilter
 from aiogram.types import Message
 
-from entities import TEXT, ADMINS
+from entities import TEXT, ADMINS, admin_markup
 from models import Link, User
 
 router = Router()
 
 
-@router.message(CommandStart())
+@router.message(CommandStart(), StateFilter(None))
 async def start(message: Message, user: User):
     if user.chat_id in ADMINS:
-        await message.answer(text=TEXT['admin-start'])
+        await message.answer(text=TEXT['admin-start'],
+                             reply_markup=admin_markup())
         return
 
     arr = message.text.split()

@@ -3,8 +3,8 @@ from aiogram.types import Update
 from typing import Callable, Dict, Any, Awaitable
 
 from models import User
-from routers import index_router
-from .fsm import storage
+from routers import index_router, link_router, utility_router
+from entities import get_update_user_info, storage
 
 dp = Dispatcher(storage=storage)
 
@@ -14,18 +14,8 @@ async def get_user(handler: Callable[[Update, Dict[str, Any]],
                                      Awaitable[Any]],
                    update: Update,
                    data: Dict[str, Any]):
-    chat_id = -1
-    username = ""
-    if update.event_type == "message":
-        chat_id = update.message.chat.id
-        username = update.message.from_user.username
-    elif update.event_type == "callback_query":
-        chat_id = update.callback_query.from_user.id
-        username = update.callback_query.from_user.username
-    elif update.event_type == "pre_checkout_query":
-        chat_id = update.pre_checkout_query.from_user.id
-        username = update.pre_checkout_query.from_user.username
-    else:
+    chat_id, username = get_update_user_info(update)
+    if chat_id == 0:
         return await handler(update, data)
 
     if not username:
@@ -42,3 +32,5 @@ async def get_user(handler: Callable[[Update, Dict[str, Any]],
     return await handler(update, data)
 
 dp.include_router(index_router)
+dp.include_router(link_router)
+dp.include_router(utility_router)
