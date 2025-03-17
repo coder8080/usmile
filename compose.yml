@@ -14,6 +14,7 @@ services:
       - prod
     networks:
       - usmile
+    restart: unless-stopped
 
   bot-dev:
     container_name: usmile-dev
@@ -27,6 +28,7 @@ services:
       - usmile
     volumes:
       - ./src:/usr/src/app/src
+    restart: unless-stopped
 
   postgres:
     image: postgres:17.4-alpine
@@ -37,3 +39,9 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: usmile
+    volumes:
+      - ./pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: pg_isready --username=$$POSTGRES_USER --dbname usmile
+      start_period: 10s
+      start_interval: 1s
