@@ -1,0 +1,23 @@
+name: deploy
+
+run-name: ${{ github.actor }} is deploying
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Login to Docker Hub
+        run: echo $DOCKER_TOKEN | docker login -u coder80 --password-stdin
+        env:
+          DOCKER_TOKEN: ${{secrets.DOCKER_TOKEN}}
+      - name: Build container
+        run: docker build -t coder80/usmile:latest .
+      - name: Push to Docker Hub
+        run: docker push coder80/usmile:latest
