@@ -9,6 +9,7 @@ def admin_markup() -> ReplyKeyboardMarkup:
     builder = ReplyKeyboardBuilder()
     builder.button(text=TEXT['create-link'])
     builder.button(text=TEXT['create-cert'])
+    builder.button(text=TEXT['check-cert'])
     builder.adjust(1)
     return builder.as_markup(resize_keyboard=True)
 

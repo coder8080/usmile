@@ -6,6 +6,7 @@ import redis.asyncio as redis
 class States(StatesGroup):
     TypingNumber = State()
     TypingName = State()
+    TypingCert = State()
 
 
 connection = redis.Redis(host="redis", port=6379)
