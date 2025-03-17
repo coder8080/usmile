@@ -16,7 +16,7 @@ class Cert(BaseModel):
     def generate_file(self):
         path = f"certs/{self.code}.txt"
         f = open(path, "w")
-        print(self.name, file=f)
+        print(self.name, self.code, file=f)
         f.close()
         return path
 
