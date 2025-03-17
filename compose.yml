@@ -5,9 +5,7 @@ networks:
 services:
   bot:
     container_name: usmile
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: coder80/usmile:latest
     env_file: .env
     profiles:
       - prod
