@@ -1,7 +1,8 @@
 from aiogram import Router, F
 from aiogram.filters import Command, StateFilter
-from aiogram.types import Message, ReplyKeyboardRemove
+from aiogram.types import Message, ReplyKeyboardRemove, CallbackQuery
 from aiogram.fsm.context import FSMContext
+from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 from entities import ADMINS, TEXT, States, get_keyboard
 from models import Cert, User
@@ -39,3 +40,31 @@ async def check_cert(message: Message, state: FSMContext, user: User):
     text = text.replace("{%NAME%}", cert.name)
 
     await message.answer(text, reply_markup=markup)
+
+    builder = InlineKeyboardBuilder()
+    builder.button(text="Да", callback_data=f"used|{cert.code}")
+    builder.button(text="Нет", callback_data="unused")
+    builder.adjust(2)
+
+    await message.answer(TEXT['input-used'], reply_markup=builder.as_markup())
+
+
+@router.callback_query(F.data.regexp("used\\|\\d+"))
+async def cert_used(query: CallbackQuery):
+    await query.answer()
+    await query.message.edit_reply_markup(reply_markup=None)
+
+    _, code = query.data.split("|")
+    cert: Cert = await Cert.aio_get(Cert.code == code)
+    cert.used = True
+    await cert.aio_save()
+
+    await query.message.edit_text(TEXT['ok-used'])
+
+
+@router.callback_query(F.data == "unused")
+async def cert_unused(query: CallbackQuery):
+    await query.answer()
+    await query.message.edit_reply_markup(reply_markup=None)
+
+    await query.message.edit_text(TEXT['ok-unused'])
