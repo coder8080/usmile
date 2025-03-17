@@ -5,6 +5,7 @@ import redis.asyncio as redis
 
 class States(StatesGroup):
     TypingNumber = State()
+    TypingName = State()
 
 
 connection = redis.Redis(host="redis", port=6379)

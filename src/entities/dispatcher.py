@@ -3,7 +3,8 @@ from aiogram.types import Update
 from typing import Callable, Dict, Any, Awaitable
 
 from models import User
-from routers import index_router, link_router, utility_router
+from routers import index_router, link_router, utility_router, \
+    create_cert_router
 from entities import get_update_user_info, storage
 
 dp = Dispatcher(storage=storage)
@@ -33,4 +34,5 @@ async def get_user(handler: Callable[[Update, Dict[str, Any]],
 
 dp.include_router(index_router)
 dp.include_router(link_router)
+dp.include_router(create_cert_router)
 dp.include_router(utility_router)
