@@ -3,7 +3,7 @@ from aiogram.filters import Command, StateFilter
 from aiogram.types import Message, FSInputFile, ReplyKeyboardRemove
 from aiogram.fsm.context import FSMContext
 
-from entities import States, TEXT, ADMINS, user_markup
+from entities import States, TEXT, ADMINS, get_keyboard
 from models import User, Cert
 
 router = Router()
@@ -36,4 +36,5 @@ async def create_cert(message: Message, user: User, state: FSMContext):
         user.count -= len(names)
         await user.aio_save()
 
-    await message.answer(TEXT['certs-ready'], reply_markup=user_markup())
+    await message.answer(TEXT['certs-ready'],
+                         reply_markup=get_keyboard(user))

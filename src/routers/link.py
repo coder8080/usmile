@@ -4,8 +4,8 @@ from aiogram.types import Message
 from aiogram.fsm.context import FSMContext
 from aiogram.types import ReplyKeyboardRemove
 
-from entities import ADMINS, TEXT, States, admin_markup
-from models import Link
+from entities import ADMINS, TEXT, States, get_keyboard
+from models import User, Link
 
 router = Router()
 
@@ -22,7 +22,7 @@ async def create_link(message: Message, state: FSMContext):
 
 
 @router.message(StateFilter(States.TypingNumber), F.chat.id.in_(ADMINS))
-async def get_number(message: Message, state: FSMContext):
+async def get_number(message: Message, user: User, state: FSMContext):
     if not message.text.isnumeric():
         await message.answer(TEXT['input-count'])
         return
@@ -32,4 +32,5 @@ async def get_number(message: Message, state: FSMContext):
     text = TEXT['link-created']
     text = text.replace("{%LINK%}", link.render())
 
-    await message.answer(text, reply_markup=admin_markup(), parse_mode="html")
+    await message.answer(text, reply_markup=get_keyboard(user),
+                         parse_mode="html")
