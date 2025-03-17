@@ -1,6 +1,6 @@
 from random import randint
 
-from peewee import TextField
+from peewee import TextField, BooleanField
 
 from .db import db, BaseModel
 
@@ -12,6 +12,7 @@ def cert_code():
 class Cert(BaseModel):
     name = TextField()
     code = TextField(default=cert_code)
+    used = BooleanField(default=False)
 
     def generate_file(self):
         path = f"certs/{self.code}.txt"
