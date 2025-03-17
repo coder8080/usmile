@@ -173,6 +173,13 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 
+certs
 pg_data
 redis_data
-certs
+.env.example
+.gitignore
+compose.yml
+Dockerfile
+Dockerfile.dev
+LICENSE
+README.md
