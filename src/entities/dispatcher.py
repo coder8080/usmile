@@ -4,8 +4,9 @@ from typing import Callable, Dict, Any, Awaitable
 
 from models import User
 from routers import index_router
+from .fsm import storage
 
-dp = Dispatcher()
+dp = Dispatcher(storage=storage)
 
 
 @dp.update.middleware

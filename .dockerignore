@@ -174,3 +174,4 @@ cython_debug/
 .pypirc
 
 pg_data
+redis_data
