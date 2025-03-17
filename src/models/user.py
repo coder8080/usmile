@@ -1,4 +1,4 @@
-from entities.db import BaseModel, db
+from entities import BaseModel, db
 from peewee import IntegerField, TextField
 
 
