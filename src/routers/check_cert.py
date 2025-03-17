@@ -19,7 +19,7 @@ async def check_start(message: Message, state: FSMContext):
                          reply_markup=ReplyKeyboardRemove())
 
 
-@router.message(StateFilter(States.TypingCert))
+@router.message(StateFilter(States.TypingCert), F.chat.id.in_(ADMINS))
 async def check_cert(message: Message, state: FSMContext, user: User):
     await state.set_state(None)
 
@@ -49,7 +49,7 @@ async def check_cert(message: Message, state: FSMContext, user: User):
     await message.answer(TEXT['input-used'], reply_markup=builder.as_markup())
 
 
-@router.callback_query(F.data.regexp("used\\|\\d+"))
+@router.callback_query(F.data.regexp("used\\|\\d+"), F.chat.id.in_(ADMINS))
 async def cert_used(query: CallbackQuery):
     await query.answer()
     await query.message.edit_reply_markup(reply_markup=None)
@@ -62,7 +62,7 @@ async def cert_used(query: CallbackQuery):
     await query.message.edit_text(TEXT['ok-used'])
 
 
-@router.callback_query(F.data == "unused")
+@router.callback_query(F.data == "unused", F.chat.id.in_(ADMINS))
 async def cert_unused(query: CallbackQuery):
     await query.answer()
     await query.message.edit_reply_markup(reply_markup=None)
