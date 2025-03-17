@@ -2,12 +2,28 @@ from aiogram.types import ReplyKeyboardMarkup, Update
 from aiogram.utils.keyboard import ReplyKeyboardBuilder
 
 from entities import ADMINS, TEXT, bot
+from models import User
 
 
 def admin_markup() -> ReplyKeyboardMarkup:
     builder = ReplyKeyboardBuilder()
     builder.button(text=TEXT['create-link'])
-    return builder.as_markup()
+    builder.button(text=TEXT['create-cert'])
+    builder.adjust(1)
+    return builder.as_markup(resize_keyboard=True)
+
+
+def user_markup() -> ReplyKeyboardMarkup:
+    builder = ReplyKeyboardBuilder()
+    builder.button(text=TEXT['create-cert'])
+    builder.adjust(1)
+    return builder.as_markup(resize_keyboard=True)
+
+
+def get_keyboard(user: User):
+    if user.chat_id in ADMINS:
+        return admin_markup()
+    return user_markup
 
 
 def get_update_user_info(update: Update):

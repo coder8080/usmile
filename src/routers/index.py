@@ -2,7 +2,7 @@ from aiogram import Router
 from aiogram.filters import CommandStart, StateFilter
 from aiogram.types import Message
 
-from entities import TEXT, ADMINS, admin_markup
+from entities import TEXT, ADMINS, get_keyboard
 from models import Link, User
 
 router = Router()
@@ -12,7 +12,7 @@ router = Router()
 async def start(message: Message, user: User):
     if user.chat_id in ADMINS:
         await message.answer(text=TEXT['admin-start'],
-                             reply_markup=admin_markup())
+                             reply_markup=get_keyboard(user))
         return
 
     arr = message.text.split()
@@ -45,4 +45,4 @@ async def start(message: Message, user: User):
     text = TEXT['ok-link']
     text = text.replace("{%COUNT%}", user.count)
 
-    await message.answer(tex=text)
+    await message.answer(text, reply_markup=get_keyboard(user))
