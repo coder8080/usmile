@@ -1,5 +1,5 @@
 from aiogram import Bot
 
-from entities.constants import TOKEN
+from entities import TOKEN
 
 bot = Bot(TOKEN)

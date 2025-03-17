@@ -1,5 +1,5 @@
 from entities.db import BaseModel, db
-from peewee import TextField, IntegerField
+from peewee import TextField, IntegerField, BooleanField
 from uuid import uuid4 as uuid
 
 
@@ -9,7 +9,8 @@ def generate_code():
 
 class Link(BaseModel):
     code = TextField(default=generate_code)
-    count = IntegerField()
+    count = IntegerField(null=False)
+    used = BooleanField(default=False)
 
 
 def init_link():

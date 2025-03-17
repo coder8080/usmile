@@ -1,5 +1,5 @@
 import peewee_async
-from entities.constants import POSTGRES_USER, POSTGRES_PASSWORD
+from entities import POSTGRES_USER, POSTGRES_PASSWORD
 
 db = peewee_async.PooledPostgresqlDatabase('usmile',
                                            user=POSTGRES_USER,
