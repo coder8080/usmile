@@ -19,6 +19,8 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
+    volumes:
+      - ./certs:/usr/src/app/certs
 
   bot-dev:
     container_name: usmile-dev
@@ -32,6 +34,7 @@ services:
       - usmile
     volumes:
       - ./src:/usr/src/app/src
+      - ./certs:/usr/src/app/certs
     restart: unless-stopped
     depends_on:
       postgres:

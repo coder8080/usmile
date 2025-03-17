@@ -7,7 +7,16 @@ from entities import ADMINS, TEXT, bot
 def admin_markup() -> ReplyKeyboardMarkup:
     builder = ReplyKeyboardBuilder()
     builder.button(text=TEXT['create-link'])
-    return builder.as_markup()
+    builder.button(text=TEXT['create-cert'])
+    builder.adjust(1)
+    return builder.as_markup(resize_keyboard=True)
+
+
+def user_markup() -> ReplyKeyboardMarkup:
+    builder = ReplyKeyboardBuilder()
+    builder.button(text=TEXT['create-cert'])
+    builder.adjust(1)
+    return builder.as_markup(resize_keyboard=True)
 
 
 def get_update_user_info(update: Update):

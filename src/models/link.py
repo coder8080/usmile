@@ -1,4 +1,4 @@
-from entities import BaseModel, db
+from .db import BaseModel, db
 from peewee import TextField, IntegerField, BooleanField
 from .utils import str_uuid
 

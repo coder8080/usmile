@@ -2,7 +2,7 @@ from aiogram import Router
 from aiogram.filters import CommandStart, StateFilter
 from aiogram.types import Message
 
-from entities import TEXT, ADMINS, admin_markup
+from entities import TEXT, ADMINS, admin_markup, user_markup
 from models import Link, User
 
 router = Router()
@@ -45,4 +45,4 @@ async def start(message: Message, user: User):
     text = TEXT['ok-link']
     text = text.replace("{%COUNT%}", user.count)
 
-    await message.answer(tex=text)
+    await message.answer(text, reply_markup=user_markup())
