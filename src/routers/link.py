@@ -1,8 +1,7 @@
 from aiogram import Router, F
 from aiogram.filters import Command, StateFilter
-from aiogram.types import Message
+from aiogram.types import Message, ReplyKeyboardRemove
 from aiogram.fsm.context import FSMContext
-from aiogram.types import ReplyKeyboardRemove
 
 from entities import ADMINS, TEXT, States, get_keyboard
 from models import User, Link
@@ -19,6 +18,13 @@ async def create_link(message: Message, state: FSMContext):
 
     await message.answer(TEXT['input-count'],
                          reply_markup=ReplyKeyboardRemove())
+
+
+@router.message(StateFilter(States.TypingNumber), Command("cancel"))
+async def cancel(message: Message, state: FSMContext, user: User):
+    await state.set_state(None)
+    await message.answer(TEXT['create-link-cancelled'],
+                         reply_markup=get_keyboard(user))
 
 
 @router.message(StateFilter(States.TypingNumber), F.chat.id.in_(ADMINS))

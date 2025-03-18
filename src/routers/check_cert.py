@@ -19,6 +19,13 @@ async def check_start(message: Message, state: FSMContext):
                          reply_markup=ReplyKeyboardRemove())
 
 
+@router.message(StateFilter(States.TypingCert), Command("cancel"))
+async def cancel(message: Message, state: FSMContext, user: User):
+    await state.set_state(None)
+    await message.answer(TEXT['check-cert-cancelled'],
+                         reply_markup=get_keyboard(user))
+
+
 @router.message(StateFilter(States.TypingCert), F.chat.id.in_(ADMINS))
 async def check_cert(message: Message, state: FSMContext, user: User):
     await state.set_state(None)

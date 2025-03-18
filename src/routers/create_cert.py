@@ -13,8 +13,17 @@ router = Router()
 @router.message(StateFilter(None), F.text == TEXT['create-cert'])
 async def open_create_cert(message: Message, state: FSMContext):
     await state.set_state(States.TypingName)
+
     await message.answer(TEXT['input-name'],
                          reply_markup=ReplyKeyboardRemove())
+
+
+@router.message(StateFilter(States.TypingName), Command("cancel"))
+async def cancel(message: Message, state: FSMContext, user: User):
+    await state.set_state(None)
+
+    await message.answer(TEXT['create-cert-cancelled'],
+                         reply_markup=get_keyboard(user))
 
 
 @router.message(StateFilter(States.TypingName))
