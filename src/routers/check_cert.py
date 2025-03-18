@@ -49,7 +49,8 @@ async def check_cert(message: Message, state: FSMContext, user: User):
     await message.answer(TEXT['input-used'], reply_markup=builder.as_markup())
 
 
-@router.callback_query(F.data.regexp("used\\|\\d+"), F.from_user.id.in_(ADMINS))
+@router.callback_query(F.data.regexp("used\\|\\d+"),
+                       F.from_user.id.in_(ADMINS))
 async def cert_used(query: CallbackQuery):
     await query.answer()
     await query.message.edit_reply_markup(reply_markup=None)

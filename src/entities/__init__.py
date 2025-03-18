@@ -1,5 +1,4 @@
-from .constants import TOKEN, POSTGRES_USER, POSTGRES_PASSWORD, ADMINS, TEXT, \
-    BOT_NAME
+from .constants import TOKEN, POSTGRES_USER, POSTGRES_PASSWORD, ADMINS, TEXT
 from .fsm import States, storage
 from .utils import get_update_user_info, log_error, get_keyboard
 from .create_bot import bot
