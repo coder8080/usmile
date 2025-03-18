@@ -1,7 +1,7 @@
 from aiogram import Router
 from aiogram.types import Message, ErrorEvent
 
-from entities import TEXT, ADMINS, get_update_user_info, bot
+from entities import TEXT, ADMINS, get_update_user_info, bot, log_error
 
 router = Router()
 
@@ -22,12 +22,9 @@ async def error_handler(error: ErrorEvent):
 Пользователь: {username}:{chat_id}. \
 Исключение: {exception}"
 
-    print(log)
-
     try:
         await bot.send_message(chat_id, TEXT['error'])
     except Exception:
         pass
 
-    for admin_chat_id in ADMINS:
-        await bot.send_message(admin_chat_id, log)
+    await log_error(log)

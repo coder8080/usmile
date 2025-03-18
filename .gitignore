@@ -175,4 +175,7 @@ cython_debug/
 
 pg_data
 redis_data
-certs
+certs/*
+!certs/.gitkeep
+logs/*
+!logs/.gitkeep

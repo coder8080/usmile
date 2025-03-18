@@ -1,7 +1,7 @@
 from aiogram.types import ReplyKeyboardMarkup, Update
 from aiogram.utils.keyboard import ReplyKeyboardBuilder
 
-from entities import ADMINS, TEXT, bot
+from entities import ADMINS, TEXT, bot, logger
 from models import User
 
 
@@ -47,7 +47,7 @@ def get_update_user_info(update: Update):
 
 
 async def log_error(message: str):
-    print(message)
+    logger.error(message)
     for admin_chat_id in ADMINS:
         await bot.send_message(chat_id=admin_chat_id,
                                text=message)
