@@ -1,7 +1,7 @@
 from aiogram import Router
 from aiogram.types import Message, ErrorEvent
 
-from entities import TEXT, ADMINS, get_update_user_info, bot, log_error
+from entities import TEXT, get_update_user_info, bot, log_error
 
 router = Router()
 
