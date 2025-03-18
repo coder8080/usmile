@@ -20,20 +20,23 @@ async def start(message: Message, user: User):
     if len(arr) != 2:
         text = TEXT['simple-user-start']
         text = text.replace("{%ID%}", str(user.chat_id))
-        await message.answer(text=text, parse_mode="html")
+        await message.answer(text=text, parse_mode="html",
+                             reply_markup=get_keyboard(user))
         return
 
     code = arr[1]
     query = Link.select().where(Link.code == code)
 
     if not await query.aio_exists():
-        await message.answer(text=TEXT['wrong-link'])
+        await message.answer(text=TEXT['wrong-link'],
+                             reply_markup=get_keyboard(user))
         return
 
     link: Link = await query.aio_first()
 
     if link.used:
-        await message.answer(text=TEXT['used-link'])
+        await message.answer(text=TEXT['used-link'],
+                             reply_markup=get_keyboard(user))
         return
 
     user.count += link.count
@@ -43,7 +46,7 @@ async def start(message: Message, user: User):
     await link.aio_save()
 
     text = TEXT['ok-link']
-    text = text.replace("{%COUNT%}", user.count)
+    text = text.replace("{%COUNT%}", str(user.count))
 
     await message.answer(text, reply_markup=get_keyboard(user))
 

@@ -1,9 +1,9 @@
-from peewee import IntegerField, TextField
+from peewee import IntegerField, TextField, BigIntegerField
 from .db import BaseModel, db
 
 
 class User(BaseModel):
-    chat_id = IntegerField()
+    chat_id = BigIntegerField()
     username = TextField()
     count = IntegerField(default=0)
 

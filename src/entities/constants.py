@@ -4,6 +4,7 @@ TOKEN = getenv("TOKEN")
 POSTGRES_USER = getenv("POSTGRES_USER")
 POSTGRES_PASSWORD = getenv("POSTGRES_PASSWORD")
 ADMINS = list(map(int, getenv("ADMINS").split(',')))
+BOT_NAME = getenv("BOT_NAME")
 
 TEXT = {
     "simple-user-start": "Пожалуйста, воспользуйтесь ссылкой от \
@@ -36,5 +37,9 @@ TEXT = {
     "ok-used": "Сертификат помечен как использованный",
     "ok-unused": "Сертификат не был помечен как использованный",
     "credits": "Built with ❤️ by [coder8080](https://github.com/coder8080) \
-and [danosito](https://github.com/danosito)"
+and [danosito](https://github.com/danosito)",
+    "check-count": "🧮 Проверить количество сертификатов",
+    "admin-count": "Вы являетесь администратором и можете создавать \
+сколько угодно сертификатов",
+    "user-count": "У вас осталось сертификатов: {%COUNT%}"
 }
