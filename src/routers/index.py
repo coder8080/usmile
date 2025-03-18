@@ -1,5 +1,5 @@
 from aiogram import Router
-from aiogram.filters import CommandStart, StateFilter
+from aiogram.filters import CommandStart, StateFilter, Command
 from aiogram.types import Message
 
 from entities import TEXT, ADMINS, get_keyboard
@@ -46,3 +46,8 @@ async def start(message: Message, user: User):
     text = text.replace("{%COUNT%}", user.count)
 
     await message.answer(text, reply_markup=get_keyboard(user))
+
+
+@router.message(Command("credits"))
+async def credits(message: Message):
+    await message.answer(TEXT['credits'], parse_mode="markdown")

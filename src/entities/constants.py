@@ -34,5 +34,7 @@ TEXT = {
 использован",
     "input-used": "Пометить сертификат как использованный?",
     "ok-used": "Сертификат помечен как использованный",
-    "ok-unused": "Сертификат не был помечен как использованный"
+    "ok-unused": "Сертификат не был помечен как использованный",
+    "credits": "Built with ❤️ by [coder8080](https://github.com/coder8080) \
+and [danosito](https://github.com/danosito)"
 }
