@@ -1,0 +1,16 @@
+name: Lint
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  link:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Build Docker container for lint
+        run: docker build -t usmile-lint -f Dockerfile.lint .
+      - name: Run built container
+        run: docker run usmile-lint
