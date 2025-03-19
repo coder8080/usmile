@@ -3,8 +3,6 @@ import asyncio
 from entities import bot
 from entities import dp
 
-print(
-
 
 async def main():
     await dp.start_polling(bot)
