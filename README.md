@@ -1,5 +1,8 @@
 <a href="https://usmileclinic.ru/">
-    <img src="./media/site_logo.jpg" alt="Usmile logo" title="Usmile" align="right" height="60" />
+    <picture>
+        <source media="(prefers-color-scheme: dark)" srcset="./media/site_logo_dark.png">
+        <img alt="3x-ui" src="./media/site_logo_light.png" height="60" align="right">
+    </picture>
 </a>
 
 # 🦷 USMILE Telegram Bot
