@@ -4,13 +4,10 @@
 
 # 🦷 USMILE Telegram Bot
 
-<p align="center">
+<div align="center">
     <a href="https://t.me/usmile_cert_bot">
         <img alt="telegram-bot" src="./media/bot_logo_small.png">
     </a>
-</p>
-
-<div align="center">
 
 [![Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)](#)
 [![Python](https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54)](#)
