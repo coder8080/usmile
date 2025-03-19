@@ -1,4 +1,4 @@
-name: deploy
+name: Deploy
 
 run-name: ${{ github.actor }} is deploying
 
