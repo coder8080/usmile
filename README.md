@@ -1,7 +1,7 @@
 <a href="https://usmileclinic.ru/">
     <picture>
         <source media="(prefers-color-scheme: dark)" srcset="./media/site_logo_dark.png">
-        <img alt="3x-ui" src="./media/site_logo_light.png">
+        <img alt="3x-ui" src="./media/site_logo_light.png" height="60" align="right">
     </picture>
 </a>
 
