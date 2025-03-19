@@ -6,4 +6,4 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt --no-cache-dir && pip install flake8
 COPY . .
 
-CMD python -m flake8 ./src
+CMD ["python", "-m", "flake8", "./src"]
