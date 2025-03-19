@@ -5,7 +5,9 @@
 # USMILE Telegram Bot
 
 <p align="center">
-    <img alt="3x-ui" src="./media/bot_logo_small.png">
+    <a href="https://t.me/usmile_cert_bot">
+        <img alt="telegram-bot" src="./media/bot_logo_small.png">
+    </a>
 </p>
 
 Телеграм бот для создания партнерских сертификатов стоматологии usmile
