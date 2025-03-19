@@ -1,11 +1,12 @@
-name: deploy
+name: Deploy
 
 run-name: ${{ github.actor }} is deploying
 
 on:
-  push:
-    branches:
-      - main
+  workflow_run:
+    workflows: [Lint]
+    branches: [main]
+    types: [completed]
 
 jobs:
   build:
