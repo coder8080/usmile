@@ -1,7 +1,11 @@
+<a href="https://usmileclinic.ru/">
+    <img src="./media/site_logo.jpg" alt="Usmile logo" title="Usmile" align="right" height="60" />
+</a>
+
 # USMILE Telegram Bot
 
 <p align="center">
-    <img alt="3x-ui" src="./media/logo.png">
+    <img alt="3x-ui" src="./media/bot_logo_small.png">
 </p>
 
 Телеграм бот для создания партнерских сертификатов стоматологии usmile
