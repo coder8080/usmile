@@ -8,7 +8,7 @@ from models import User
 router = Router()
 
 
-@router.message(StateFilter(None), Command("/check_count"))
+@router.message(StateFilter(None), Command("check_count"))
 @router.message(StateFilter(None), F.text == TEXT['check-count'])
 async def check_count(message: Message, user: User):
     if user.chat_id in ADMINS:
