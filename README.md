@@ -71,7 +71,9 @@ pip freeze > requirements.txt # обновляет requirements.txt
 
 ### Продакшен
 
-_Команда запуска_
+_Сборка и деплой автоматизированы с помощью [github-actions](https://github.com/coder8080/usmile/actions)_
+
+**Команда запуска**
 
 ```bash
 docker compose --profile prod up -d
