@@ -1,4 +1,4 @@
-FROM python:3.12-alpine
+FROM pypy:3.11-bookworm
 
 WORKDIR /usr/src/app
 
@@ -6,4 +6,4 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt --no-cache-dir
 COPY . .
 
-CMD ["python", "-u", "src/main.py"]
+CMD ["pypy3", "-u", "src/main.py"]
