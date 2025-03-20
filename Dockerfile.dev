@@ -1,11 +1,9 @@
-FROM pypy:3.11-bookworm
+FROM pypy:3
 
 WORKDIR /usr/src/app
 
-RUN apk add libpq-dev gcc libc-dev
-
 COPY requirements.txt .
-RUN pip install -r requirements.txt
-RUN pip install watchdog[watchmedo]
+RUN pip install -r requirements.txt --no-cache-dir
+RUN pip install watchdog[watchmedo] --no-cache-dir
 
-CMD watchmedo auto-restart --patterns="*.py" --recursive --interval 5 -- python -u src/main.py
+CMD watchmedo auto-restart --patterns="*.py" --recursive --interval 5 -- pypy -u src/main.py
