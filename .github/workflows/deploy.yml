@@ -1,6 +1,6 @@
 name: Deploy
 
-run-name: ${{ github.actor }} is deploying
+run-name: Deploy ${{github.sha}}
 
 on:
   workflow_run:

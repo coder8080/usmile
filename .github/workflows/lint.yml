@@ -1,5 +1,7 @@
 name: Lint
 
+run-name: Lint ${{github.sha}}
+
 on:
   push:
     branches: ["**"]
