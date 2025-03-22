@@ -20,7 +20,7 @@ async def get_user(handler: Callable[[Update, Dict[str, Any]],
         return await handler(update, data)
 
     if not username:
-        username = "unknown:" + chat_id
+        username = "unknown:" + str(chat_id)
 
     query = User.select().where(User.chat_id == chat_id)
     if not await query.aio_exists():
