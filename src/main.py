@@ -1,6 +1,7 @@
 import asyncio
 
-from entities import bot, dp
+from entities import bot
+from routers import dp
 
 
 async def main():

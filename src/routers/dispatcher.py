@@ -5,14 +5,13 @@ from aiogram.types import Update
 
 from entities import get_update_user_info, storage
 from models import User
-from routers import (
-    check_cert_router,
-    check_count_router,
-    create_cert_router,
-    index_router,
-    link_router,
-    utility_router,
-)
+
+from .check_cert import router as check_cert_router
+from .check_count import router as check_count_router
+from .create_cert import router as create_cert_router
+from .index import router as index_router
+from .link import router as link_router
+from .utility import router as utility_router
 
 dp = Dispatcher(storage=storage)
 
