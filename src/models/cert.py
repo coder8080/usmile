@@ -1,8 +1,8 @@
 from random import randint
 
-from peewee import TextField, BooleanField
+from peewee import BooleanField, TextField
 
-from .db import db, BaseModel
+from .db import BaseModel, db
 
 
 def cert_code():

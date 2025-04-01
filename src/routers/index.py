@@ -1,8 +1,8 @@
 from aiogram import Router
-from aiogram.filters import CommandStart, StateFilter, Command
+from aiogram.filters import Command, CommandStart, StateFilter
 from aiogram.types import Message
 
-from entities import TEXT, ADMINS, get_keyboard
+from entities import ADMINS, TEXT, get_keyboard
 from models import Link, User
 
 router = Router()

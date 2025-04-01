@@ -1,11 +1,18 @@
+from typing import Any, Awaitable, Callable, Dict
+
 from aiogram import Dispatcher
 from aiogram.types import Update
-from typing import Callable, Dict, Any, Awaitable
 
-from models import User
-from routers import index_router, link_router, utility_router, \
-    create_cert_router, check_cert_router, check_count_router
 from entities import get_update_user_info, storage
+from models import User
+from routers import (
+    check_cert_router,
+    check_count_router,
+    create_cert_router,
+    index_router,
+    link_router,
+    utility_router,
+)
 
 dp = Dispatcher(storage=storage)
 
@@ -20,7 +27,7 @@ async def get_user(handler: Callable[[Update, Dict[str, Any]],
         return await handler(update, data)
 
     if not username:
-        username = "unknown:" + chat_id
+        username = "unknown:" + str(chat_id)
 
     query = User.select().where(User.chat_id == chat_id)
     if not await query.aio_exists():
