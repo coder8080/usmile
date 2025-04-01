@@ -44,7 +44,7 @@ jobs:
 
       - name: Upload compose file
         run: |
-          rsync -e "ssh -p ${{SSH_PORT}} -i ~/.ssh/key" compose.yml $SSH_USER@$SSH_HOST:/home/$SSH_USER/projects/usmile/compose.yml
+          rsync -e "ssh -p $SSH_PORT -i ~/.ssh/key" compose.yml $SSH_USER@$SSH_HOST:/home/$SSH_USER/projects/usmile/compose.yml
         env:
           SSH_HOST: ${{secrets.SSH_HOST}}
           SSH_USER: ${{secrets.SSH_USER}}
