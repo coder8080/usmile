@@ -1,7 +1,7 @@
-from aiogram import Router, F
+from aiogram import F, Router
 from aiogram.filters import Command, StateFilter
-from aiogram.types import Message, ReplyKeyboardRemove, CallbackQuery
 from aiogram.fsm.context import FSMContext
+from aiogram.types import CallbackQuery, Message, ReplyKeyboardRemove
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 
 from entities import ADMINS, TEXT, States, get_keyboard

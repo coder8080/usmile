@@ -1,10 +1,10 @@
-from aiogram import Router, F
+from aiogram import F, Router
 from aiogram.filters import Command, StateFilter
-from aiogram.types import Message, FSInputFile, ReplyKeyboardRemove
 from aiogram.fsm.context import FSMContext
+from aiogram.types import FSInputFile, Message, ReplyKeyboardRemove
 
-from entities import States, TEXT, ADMINS, get_keyboard
-from models import User, Cert
+from entities import ADMINS, TEXT, States, get_keyboard
+from models import Cert, User
 
 router = Router()
 

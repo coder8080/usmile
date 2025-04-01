@@ -1,4 +1,5 @@
-from peewee import IntegerField, TextField, BigIntegerField
+from peewee import BigIntegerField, IntegerField, TextField
+
 from .db import BaseModel, db
 
 

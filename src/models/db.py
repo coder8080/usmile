@@ -1,5 +1,6 @@
 import peewee_async
-from entities import POSTGRES_USER, POSTGRES_PASSWORD
+
+from entities import POSTGRES_PASSWORD, POSTGRES_USER
 
 db = peewee_async.PsycopgDatabase('usmile',
                                   user=POSTGRES_USER,

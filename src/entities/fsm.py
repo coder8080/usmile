@@ -1,6 +1,6 @@
-from aiogram.fsm.state import StatesGroup, State
-from aiogram.fsm.storage.redis import RedisStorage
 import redis.asyncio as redis
+from aiogram.fsm.state import State, StatesGroup
+from aiogram.fsm.storage.redis import RedisStorage
 
 
 class States(StatesGroup):

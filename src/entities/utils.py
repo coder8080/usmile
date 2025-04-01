@@ -2,9 +2,10 @@ from aiogram.types import ReplyKeyboardMarkup, Update
 from aiogram.utils.keyboard import ReplyKeyboardBuilder
 
 from entities import ADMINS, TEXT
+from models import User
+
 from .create_bot import bot
 from .logs import logger
-from models import User
 
 
 def admin_markup() -> ReplyKeyboardMarkup:

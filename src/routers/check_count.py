@@ -1,8 +1,8 @@
-from aiogram import Router, F
-from aiogram.filters import StateFilter, Command
+from aiogram import F, Router
+from aiogram.filters import Command, StateFilter
 from aiogram.types import Message
 
-from entities import TEXT, ADMINS
+from entities import ADMINS, TEXT
 from models import User
 
 router = Router()

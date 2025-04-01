@@ -1,6 +1,7 @@
-from peewee import TextField, IntegerField, BooleanField
+from peewee import BooleanField, IntegerField, TextField
 
 from entities.constants import BOT_NAME
+
 from .db import BaseModel, db
 from .utils import str_uuid
 
