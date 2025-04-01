@@ -43,16 +43,18 @@ jobs:
 
       - name: Upload compose file
         run: |
-          rsync -e "ssh -i ~/.ssh/key" compose.yml root@$SSH_HOST:/root/projects/usmile/compose.yml
+          rsync -e "ssh -i ~/.ssh/key" compose.yml $SSH_USER@$SSH_HOST:/home/$SSH_USER/projects/usmile/compose.yml
         env:
           SSH_HOST: ${{secrets.SSH_HOST}}
+          SSH_USER: ${{secrets.SSH_USER}}
 
       - name: Connnect and deploy
         run: |
-          ssh -i ~/.ssh/key root@$SSH_HOST "
-          cd /root/projects/usmile && 
+          ssh -i ~/.ssh/key $SSH_USER@$SSH_HOST "
+          cd /home/$SSH_USER/projects/usmile
           docker compose --profile prod pull
-          docker compose --profile prod up -d &&
+          docker compose --profile prod up -d
           docker system prune -f"
         env:
           SSH_HOST: ${{secrets.SSH_HOST}}
+          SSH_USER: ${{secrets.SSH_USER}}
