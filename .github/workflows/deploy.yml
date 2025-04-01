@@ -33,24 +33,26 @@ jobs:
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/key
           sudo chmod 600 ~/.ssh/key
-          ssh-keyscan -H $SSH_HOST > ~/.ssh/known_hosts
+          ssh-keyscan -p $SSH_PORT -H $SSH_HOST > ~/.ssh/known_hosts
         env:
           SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
           SSH_HOST: ${{secrets.SSH_HOST}}
+          SSH_PORT: ${{secrets.SSH_PORT}}
 
       - name: Check out repository code
         uses: actions/checkout@v4
 
       - name: Upload compose file
         run: |
-          rsync -e "ssh -i ~/.ssh/key" compose.yml $SSH_USER@$SSH_HOST:/home/$SSH_USER/projects/usmile/compose.yml
+          rsync -e "ssh -p ${{SSH_PORT}} -i ~/.ssh/key" compose.yml $SSH_USER@$SSH_HOST:/home/$SSH_USER/projects/usmile/compose.yml
         env:
           SSH_HOST: ${{secrets.SSH_HOST}}
           SSH_USER: ${{secrets.SSH_USER}}
+          SSH_PORT: ${{secrets.SSH_PORT}}
 
       - name: Connnect and deploy
         run: |
-          ssh -i ~/.ssh/key $SSH_USER@$SSH_HOST "
+          ssh -i ~/.ssh/key -p $SSH_PORT $SSH_USER@$SSH_HOST "
           cd /home/$SSH_USER/projects/usmile
           docker compose --profile prod pull
           docker compose --profile prod up -d
@@ -58,3 +60,4 @@ jobs:
         env:
           SSH_HOST: ${{secrets.SSH_HOST}}
           SSH_USER: ${{secrets.SSH_USER}}
+          SSH_PORT: ${{secrets.SSH_PORT}}
