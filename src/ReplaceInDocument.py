@@ -1,5 +1,6 @@
 import subprocess
 
+
 def replaceInDocument(FIO: str, dateTill: str, pdfFileName: str) -> None:
     with open("certificate.svg", "r", encoding="utf-8") as file:
         svg_content = file.read()
@@ -17,4 +18,3 @@ def replaceInDocument(FIO: str, dateTill: str, pdfFileName: str) -> None:
     ], check=True)
 
     print(f"PDF успешно создан: {pdfFileName}")
-
