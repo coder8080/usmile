@@ -13,7 +13,7 @@ def cert_code():
 
 
 async def replace_in_document(
-    name: str, expires: str, result_filename: str, temp_filename: str, code:str
+    name: str, expires: str, result_filename: str, temp_filename: str, code:TextField
 ) -> None:
     with open("src/static/certificate.svg", "r", encoding="utf-8") as file:
         svg_content = file.read()
