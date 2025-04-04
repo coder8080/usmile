@@ -13,12 +13,13 @@ def cert_code():
 
 
 async def replace_in_document(
-    name: str, expires: str, result_filename: str, temp_filename: str
+    name: str, expires: str, result_filename: str, temp_filename: str, code:str
 ) -> None:
     with open("src/static/certificate.svg", "r", encoding="utf-8") as file:
         svg_content = file.read()
     svg_content = svg_content.replace("fioHandler", name)
     svg_content = svg_content.replace("dateHandler", expires)
+    svg_content = svg_content.replace("codeHandler", code)
 
     with open(temp_filename, "w", encoding="utf-8") as f:
         f.write(svg_content)
@@ -46,7 +47,7 @@ class Cert(BaseModel):
         expire_str = f"{expire.year}/{expire.month}/{expire.day}"
 
         await replace_in_document(
-            cast(str, self.name), expire_str, path, temp_path
+            cast(str, self.name), expire_str, path, temp_path, self.code
         )
         return path
 
