@@ -41,9 +41,11 @@ async def create_cert(message: Message, user: User, state: FSMContext):
 
     await state.set_state(None)
 
+    await message.answer(TEXT["start-create-cert"])
+
     for name in names:
         cert = await Cert.aio_create(name=name)
-        path = cert.generate_file()
+        path = await cert.generate_file()
         await message.answer_document(FSInputFile(path))
 
     if user.chat_id not in ADMINS:

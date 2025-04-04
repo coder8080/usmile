@@ -1,5 +1,7 @@
 FROM pypy:3
 
+RUN apt update && apt install inkscape -y
+
 WORKDIR /usr/src/app
 
 COPY requirements.txt .
