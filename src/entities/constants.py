@@ -1,9 +1,12 @@
 from os import getenv
+from typing import cast
 
-TOKEN = getenv("TOKEN")
+TOKEN = cast(str, getenv("TOKEN"))
+assert TOKEN
+
 POSTGRES_USER = getenv("POSTGRES_USER")
 POSTGRES_PASSWORD = getenv("POSTGRES_PASSWORD")
-ADMINS = list(map(int, getenv("ADMINS").split(',')))
+ADMINS = list(map(int, (getenv("ADMINS") or "").split(",")))
 BOT_NAME = getenv("BOT_NAME")
 
 TEXT = {
@@ -44,7 +47,7 @@ and [danosito](https://github.com/danosito)",
 сколько угодно сертификатов",
     "user-count": "У вас осталось сертификатов: {%COUNT%}",
     "cancel": "❌ Отмена",
-    "create-link-cancelled": '👌 Создание ссылки отменено',
+    "create-link-cancelled": "👌 Создание ссылки отменено",
     "create-cert-cancelled": "👌 Создание сертификата отменено",
-    "check-cert-cancelled": "👌 Проверка сертификата отменена"
+    "check-cert-cancelled": "👌 Проверка сертификата отменена",
 }

@@ -8,7 +8,7 @@ router = Router()
 
 @router.message()
 async def unknown_message(message: Message):
-    await message.answer(TEXT['unknown-message'])
+    await message.answer(TEXT["unknown-message"])
 
 
 @router.error()
@@ -23,7 +23,7 @@ async def error_handler(error: ErrorEvent):
 Исключение: {exception}"
 
     try:
-        await bot.send_message(chat_id, TEXT['error'])
+        await bot.send_message(chat_id, TEXT["error"])
     except Exception:
         pass
 

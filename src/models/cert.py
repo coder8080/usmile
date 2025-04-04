@@ -6,7 +6,7 @@ from .db import BaseModel, db
 
 
 def cert_code():
-    return ''.join([str(randint(1, 9)) for _ in range(8)])
+    return "".join([str(randint(1, 9)) for _ in range(8)])
 
 
 class Cert(BaseModel):

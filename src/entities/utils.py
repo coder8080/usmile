@@ -1,4 +1,7 @@
-from aiogram.types import ReplyKeyboardMarkup, Update
+from aiogram.types import Message, ReplyKeyboardMarkup
+from aiogram.types.base import TelegramObject
+from aiogram.types.callback_query import CallbackQuery
+from aiogram.types.pre_checkout_query import PreCheckoutQuery
 from aiogram.utils.keyboard import ReplyKeyboardBuilder
 
 from entities import ADMINS, TEXT
@@ -10,17 +13,17 @@ from .logs import logger
 
 def admin_markup() -> ReplyKeyboardMarkup:
     builder = ReplyKeyboardBuilder()
-    builder.button(text=TEXT['create-link'])
-    builder.button(text=TEXT['create-cert'])
-    builder.button(text=TEXT['check-cert'])
+    builder.button(text=TEXT["create-link"])
+    builder.button(text=TEXT["create-cert"])
+    builder.button(text=TEXT["check-cert"])
     builder.adjust(1)
     return builder.as_markup(resize_keyboard=True)
 
 
 def user_markup() -> ReplyKeyboardMarkup:
     builder = ReplyKeyboardBuilder()
-    builder.button(text=TEXT['create-cert'])
-    builder.button(text=TEXT['check-count'])
+    builder.button(text=TEXT["create-cert"])
+    builder.button(text=TEXT["check-count"])
     builder.adjust(1)
     return builder.as_markup(resize_keyboard=True)
 
@@ -31,18 +34,17 @@ def get_keyboard(user: User):
     return user_markup()
 
 
-def get_update_user_info(update: Update):
+def get_update_user_info(update: TelegramObject):
     chat_id = 0
     username = ""
-    if update.event_type == "message":
-        chat_id = update.message.chat.id
-        username = update.message.from_user.username
-    elif update.event_type == "callback_query":
-        chat_id = update.callback_query.from_user.id
-        username = update.callback_query.from_user.username
-    elif update.event_type == "pre_checkout_query":
-        chat_id = update.pre_checkout_query.from_user.id
-        username = update.pre_checkout_query.from_user.username
+    if (
+        isinstance(update, Message) or isinstance(update, PreCheckoutQuery)
+    ) and update.from_user:
+        chat_id = update.from_user.id
+        username = update.from_user.username
+    elif isinstance(update, CallbackQuery):
+        chat_id = update.from_user.id
+        username = update.from_user.username
 
     if username is None:
         username = f"unknown:${chat_id}"
@@ -53,5 +55,4 @@ def get_update_user_info(update: Update):
 async def log_error(message: str):
     logger.error(message)
     for admin_chat_id in ADMINS:
-        await bot.send_message(chat_id=admin_chat_id,
-                               text=message)
+        await bot.send_message(chat_id=admin_chat_id, text=message)

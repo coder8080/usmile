@@ -2,9 +2,9 @@ FROM pypy:3
 
 WORKDIR /usr/src/app
 
-RUN pip install ruff
+RUN pip install ruff pyright
 COPY requirements.txt .
 RUN pip install -r requirements.txt --no-cache-dir
 COPY . .
 
-CMD ["ruff", "check", "--extend-select", "I"]
+CMD ruff check --extend-select I && pyright
