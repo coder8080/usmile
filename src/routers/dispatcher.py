@@ -1,6 +1,7 @@
-from typing import Any, Awaitable, Callable, Dict
+from typing import Any, Awaitable, Callable, Dict, cast
 
 from aiogram import Dispatcher
+from aiogram.types import Update
 from aiogram.types.base import TelegramObject
 
 from entities import get_update_user_info, storage
@@ -18,10 +19,11 @@ dp = Dispatcher(storage=storage)
 
 @dp.update.middleware
 async def get_user(
-    handler: Callable[[TelegramObject, Dict[str, Any]], Awaitable[Any]],
-    update: TelegramObject,
+    handler: Callable[[Update, Dict[str, Any]], Awaitable[Any]],
+    _update: TelegramObject,
     data: Dict[str, Any],
 ):
+    update = cast(Update, _update)
     chat_id, username = get_update_user_info(update)
     if chat_id == 0:
         return await handler(update, data)

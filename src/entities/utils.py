@@ -1,7 +1,4 @@
-from aiogram.types import Message, ReplyKeyboardMarkup
-from aiogram.types.base import TelegramObject
-from aiogram.types.callback_query import CallbackQuery
-from aiogram.types.pre_checkout_query import PreCheckoutQuery
+from aiogram.types import ReplyKeyboardMarkup, Update
 from aiogram.utils.keyboard import ReplyKeyboardBuilder
 
 from entities import ADMINS, TEXT
@@ -34,17 +31,18 @@ def get_keyboard(user: User):
     return user_markup()
 
 
-def get_update_user_info(update: TelegramObject):
+def get_update_user_info(update: Update):
     chat_id = 0
     username = ""
-    if (
-        isinstance(update, Message) or isinstance(update, PreCheckoutQuery)
-    ) and update.from_user:
-        chat_id = update.from_user.id
-        username = update.from_user.username
-    elif isinstance(update, CallbackQuery):
-        chat_id = update.from_user.id
-        username = update.from_user.username
+    if update.message and update.message.from_user:
+        chat_id = update.message.chat.id
+        username = update.message.from_user.username
+    elif update.callback_query:
+        chat_id = update.callback_query.from_user.id
+        username = update.callback_query.from_user.username
+    elif update.pre_checkout_query:
+        chat_id = update.pre_checkout_query.from_user.id
+        username = update.pre_checkout_query.from_user.username
 
     if username is None:
         username = f"unknown:${chat_id}"
