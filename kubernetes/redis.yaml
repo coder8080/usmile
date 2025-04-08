@@ -1,0 +1,61 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: redis-claim
+  labels:
+    app: usmile
+    component: redis
+spec:
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: usmile-redis
+  accessModes:
+    - ReadWriteOnce
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-service
+  labels:
+    app: usmile
+    component: redis
+spec:
+  selector:
+    app: usmile
+    component: redis
+  ports:
+    - port: 6379
+      targetPort: redis
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+  labels:
+    app: usmile
+    component: redis
+spec:
+  selector:
+    matchLabels:
+      app: usmile
+      component: redis
+  template:
+    metadata:
+      labels:
+        app: usmile
+        component: redis
+    spec:
+      volumes:
+        - name: redis-volume
+          persistentVolumeClaim:
+            claimName: redis-claim
+      containers:
+        - name: redis
+          image: redis:7.4.2-alpine
+          volumeMounts:
+            - name: redis-volume
+              mountPath: /data
+          ports:
+            - containerPort: 6379
+              name: redis

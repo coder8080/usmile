@@ -183,4 +183,4 @@ Dockerfile
 Dockerfile.dev
 LICENSE
 README.md
-logs
+kubernetes

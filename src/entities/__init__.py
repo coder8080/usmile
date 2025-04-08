@@ -1,4 +1,12 @@
-from .constants import ADMINS, POSTGRES_PASSWORD, POSTGRES_USER, TEXT, TOKEN
+from .constants import (
+    ADMINS,
+    POSTGRES_HOST,
+    POSTGRES_PASSWORD,
+    POSTGRES_PORT,
+    POSTGRES_USER,
+    TEXT,
+    TOKEN,
+)
 from .create_bot import bot
 from .fsm import States, storage
 from .logs import logger
@@ -8,6 +16,8 @@ __all__ = [
     "TOKEN",
     "POSTGRES_USER",
     "POSTGRES_PASSWORD",
+    "POSTGRES_HOST",
+    "POSTGRES_PORT",
     "ADMINS",
     "TEXT",
     "States",

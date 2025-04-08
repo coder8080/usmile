@@ -1,5 +1,7 @@
 name: Deploy
 
+concurrency: Vostro
+
 run-name: Deploy ${{github.sha}}
 
 on:
@@ -20,44 +22,27 @@ jobs:
         env:
           DOCKER_TOKEN: ${{secrets.DOCKER_TOKEN}}
       - name: Build container
-        run: docker build -t coder80/usmile:latest .
-      - name: Push to Docker Hub
+        run: docker build -t coder80/usmile:latest -t coder80/usmile:$SHA .
+        env:
+          SHA: ${{ github.sha }}
+      - name: Push latest tag to Docker Hub
         run: docker push coder80/usmile:latest
+      - name: Push commit sha tag to Docker Hub
+        run: docker push coder80/usmile:$SHA
+        env:
+          SHA: ${{ github.sha }}
 
   deploy:
     needs: build
     runs-on: ubuntu-latest
+    environment: Vostro
     steps:
-      - name: Create SSH key
-        run: |
-          mkdir -p ~/.ssh
-          echo "$SSH_PRIVATE_KEY" > ~/.ssh/key
-          sudo chmod 600 ~/.ssh/key
-          ssh-keyscan -p $SSH_PORT -H $SSH_HOST > ~/.ssh/known_hosts
-        env:
-          SSH_PRIVATE_KEY: ${{secrets.SSH_PRIVATE_KEY}}
-          SSH_HOST: ${{secrets.SSH_HOST}}
-          SSH_PORT: ${{secrets.SSH_PORT}}
-
       - name: Check out repository code
         uses: actions/checkout@v4
 
-      - name: Upload compose file
-        run: |
-          rsync -e "ssh -p $SSH_PORT -i ~/.ssh/key" compose.yml $SSH_USER@$SSH_HOST:/home/$SSH_USER/projects/usmile/compose.yml
+      - name: Deploy
+        uses: actions-hub/kubectl@master
         env:
-          SSH_HOST: ${{secrets.SSH_HOST}}
-          SSH_USER: ${{secrets.SSH_USER}}
-          SSH_PORT: ${{secrets.SSH_PORT}}
-
-      - name: Connnect and deploy
-        run: |
-          ssh -i ~/.ssh/key -p $SSH_PORT $SSH_USER@$SSH_HOST "
-          cd /home/$SSH_USER/projects/usmile
-          docker compose --profile prod pull
-          docker compose --profile prod up -d
-          docker system prune -f"
-        env:
-          SSH_HOST: ${{secrets.SSH_HOST}}
-          SSH_USER: ${{secrets.SSH_USER}}
-          SSH_PORT: ${{secrets.SSH_PORT}}
+          KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
+        with:
+          args: --namespace=usmile set image deployments/main main=coder80/usmile:${{ github.SHA }}

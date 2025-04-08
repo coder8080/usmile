@@ -2,6 +2,8 @@ import redis.asyncio as redis
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.fsm.storage.redis import RedisStorage
 
+from .constants import REDIS_HOST
+
 
 class States(StatesGroup):
     TypingNumber = State()
@@ -9,5 +11,6 @@ class States(StatesGroup):
     TypingCert = State()
 
 
-connection = redis.Redis(host="redis", port=6379)
+assert REDIS_HOST
+connection = redis.Redis(host=REDIS_HOST, port=6379)
 storage = RedisStorage(connection)

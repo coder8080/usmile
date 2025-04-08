@@ -5,7 +5,21 @@ TOKEN = cast(str, getenv("TOKEN"))
 assert TOKEN
 
 POSTGRES_USER = getenv("POSTGRES_USER")
+assert POSTGRES_USER
+
 POSTGRES_PASSWORD = getenv("POSTGRES_PASSWORD")
+assert POSTGRES_PASSWORD
+
+POSTGRES_HOST = getenv("POSTGRES_HOST")
+assert POSTGRES_HOST
+
+POSTGRES_PORT_STR = getenv("POSTGRES_PORT")
+assert POSTGRES_PORT_STR
+POSTGRES_PORT = int(POSTGRES_PORT_STR)
+
+REDIS_HOST = getenv("REDIS_HOST")
+assert REDIS_HOST
+
 ADMINS = list(map(int, (getenv("ADMINS") or "").split(",")))
 BOT_NAME = getenv("BOT_NAME")
 

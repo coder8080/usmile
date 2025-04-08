@@ -1,0 +1,74 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: postgres-claim
+  labels:
+    app: usmile
+    component: postgres
+spec:
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: usmile-postgres
+  accessModes:
+    - ReadWriteOnce
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-service
+  labels:
+    app: usmile
+    component: postgres
+spec:
+  selector:
+    app: usmile
+    component: postgres
+  ports:
+    - port: 5432
+      targetPort: postgres
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+  labels:
+    app: usmile
+    component: postgres
+spec:
+  selector:
+    matchLabels:
+      app: usmile
+      component: postgres
+  template:
+    metadata:
+      labels:
+        app: usmile
+        component: postgres
+    spec:
+      volumes:
+        - name: postgres-volume
+          persistentVolumeClaim:
+            claimName: postgres-claim
+      containers:
+        - name: postgres
+          image: postgres:17.4-alpine
+          volumeMounts:
+            - name: postgres-volume
+              mountPath: /var/lib/postgresql/data
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: secret
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: secret
+                  key: POSTGRES_PASSWORD
+            - name: POSTGRES_DB
+              value: usmile
+          ports:
+            - containerPort: 5432
+              name: postgres
