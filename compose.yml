@@ -1,40 +1,26 @@
+# ⚠️ Only for development! Use kubernetes in production
+
 networks:
   usmile:
     driver: bridge
 
 services:
-  bot:
-    container_name: usmile
-    image: coder80/usmile:latest
-    env_file: .env
-    profiles:
-      - prod
-    networks:
-      - usmile
-    restart: always
-    depends_on:
-      postgres:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
-    volumes:
-      - ./certs:/usr/src/app/certs
-      - ./logs:/usr/src/app/logs
-
   bot-dev:
     container_name: usmile-dev
     build:
       context: .
       dockerfile: Dockerfile.dev
     env_file: .env
-    profiles:
-      - dev
+    environment:
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: 5432
+      REDIS_HOST: redis
+      LOCAL: true
     networks:
       - usmile
     volumes:
       - ./src:/usr/src/app/src
       - ./certs:/usr/src/app/certs
-      - ./logs:/usr/src/app/logs
     restart: no
     depends_on:
       postgres:
@@ -67,9 +53,6 @@ services:
     volumes:
       - ./redis_data:/data
     restart: always
-    profiles:
-      - dev
-      - prod
     healthcheck:
       test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
       start_period: 10s
