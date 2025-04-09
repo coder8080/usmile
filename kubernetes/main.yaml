@@ -73,3 +73,15 @@ spec:
           volumeMounts:
             - name: certs-volume
               mountPath: /usr/src/app/certs
+          livenessProbe:
+            httpGet:
+              port: 3000
+              path: liveness
+            periodSeconds: 3
+            initialDelaySeconds: 5
+          startupProbe:
+            httpGet:
+              port: 3000
+              path: liveness
+            periodSeconds: 3
+            failureThreshold: 20
